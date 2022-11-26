@@ -1,22 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
+import ReactJson from 'react-json-view'
 
-function App() {
+export const App = () => {
+
+  const base_path = 'https://nest-microservice-demo.herokuapp.com/300';
+  const [healthEndpoint, setHealthEndpoint] = useState();
+
+  useEffect(() => {
+    fetch(`${base_path}/hello`)
+    .then((response) => setHealthEndpoint(response.body));
+  });
+
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {healthEndpoint && <ReactJson src={healthEndpoint} />}
       </header>
     </div>
   );
