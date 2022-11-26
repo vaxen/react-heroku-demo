@@ -5,12 +5,13 @@ import ReactJson from 'react-json-view'
 
 export const App = () => {
 
-  const base_path = 'https://nest-microservice-demo.herokuapp.com/300';
-  const [healthEndpoint, setHealthEndpoint] = useState();
+  const base_path = 'https://nest-microservice-demo.herokuapp.com';
+  const [healthEndpoint, setHealthEndpoint] = useState(null);
 
   useEffect(() => {
-    fetch(`${base_path}/hello`)
-    .then((response) => setHealthEndpoint(response.body));
+    fetch(`https://nest-microservice-demo.herokuapp.com`)
+    .then((response) => response.json())
+    .then((actualData) => setHealthEndpoint(actualData));
   });
 
 
@@ -18,7 +19,7 @@ export const App = () => {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        {healthEndpoint && <ReactJson src={healthEndpoint} />}
+         {healthEndpoint && <ReactJson src={healthEndpoint} theme="monokai"/>}
       </header>
     </div>
   );
