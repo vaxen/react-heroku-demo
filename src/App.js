@@ -2,24 +2,26 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react';
 import ReactJson from 'react-json-view'
+import { getHealthCheck } from './services/nest-microservice-demo.service';
 
 export const App = () => {
-
-  const base_path = 'https://nest-microservice-demo.herokuapp.com';
   const [healthEndpoint, setHealthEndpoint] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://nest-microservice-demo.herokuapp.com`)
-    .then((response) => response.json())
-    .then((actualData) => setHealthEndpoint(actualData));
-  });
+    getHealthCheck().then(r => {
+      setHealthEndpoint(r);
+      setIsLoading(false);
+    })
+  },[]);
 
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-         {healthEndpoint && <ReactJson src={healthEndpoint} theme="monokai"/>}
+          {isLoading && "Loading..."}
+          {healthEndpoint && <ReactJson src={healthEndpoint} theme="monokai"/>}
       </header>
     </div>
   );
