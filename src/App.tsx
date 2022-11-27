@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+/* import logo from './logo.svg'; */
 import './App.css';
 import { useState, useEffect } from 'react';
 import ReactJson from 'react-json-view'
@@ -19,7 +19,6 @@ export const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
           {isLoading && "Loading..."}
           {healthEndpoint && <ReactJson src={healthEndpoint} theme="monokai"/>}
       </header>
